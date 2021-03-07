@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictura.Server", "Pictura.Server\Pictura.Server.csproj", "{C95C8B37-F5DE-41E8-BB63-AD870F7A836A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictura.ClientAndroid.Android", "Pictura.ClientAndroid\Pictura.ClientAndroid.Android\Pictura.ClientAndroid.Android.csproj", "{666EF476-A6B2-4DF2-96C1-FBB58002D2BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictura.ClientAndroid", "Pictura.ClientAndroid\Pictura.ClientAndroid\Pictura.ClientAndroid.csproj", "{E7F0F021-0B0E-486A-94DE-7F3518B46FB2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C95C8B37-F5DE-41E8-BB63-AD870F7A836A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C95C8B37-F5DE-41E8-BB63-AD870F7A836A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C95C8B37-F5DE-41E8-BB63-AD870F7A836A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C95C8B37-F5DE-41E8-BB63-AD870F7A836A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{666EF476-A6B2-4DF2-96C1-FBB58002D2BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{666EF476-A6B2-4DF2-96C1-FBB58002D2BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{666EF476-A6B2-4DF2-96C1-FBB58002D2BF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{666EF476-A6B2-4DF2-96C1-FBB58002D2BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{666EF476-A6B2-4DF2-96C1-FBB58002D2BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{666EF476-A6B2-4DF2-96C1-FBB58002D2BF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E7F0F021-0B0E-486A-94DE-7F3518B46FB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7F0F021-0B0E-486A-94DE-7F3518B46FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7F0F021-0B0E-486A-94DE-7F3518B46FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7F0F021-0B0E-486A-94DE-7F3518B46FB2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {115407E4-DA63-4121-BDDB-88DA8321841A}
+	EndGlobalSection
+EndGlobal
