@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:gallery="clr-namespace:Pictura.ClientAndroid.ViewModels.Gallery;assembly=Pictura.ClientAndroid"
+             x:Class="Pictura.ClientAndroid.Views.GalleryPage">
+	
+	<ContentPage.BindingContext>
+		<gallery:GalleryViewModel />
+	</ContentPage.BindingContext>
+	
+	<ContentPage.Content>
+		
+		<CollectionView ItemsSource="{Binding Monkeys}">
+			
+			<CollectionView.ItemsLayout>
+				<GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="1" />
+			</CollectionView.ItemsLayout>
+			
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+						<Image Source="{Binding ImageUrl}"
+						       Margin="30"
+						       Aspect="AspectFit"
+						       HeightRequest="128"
+						       WidthRequest="128" >
+							<Image.GestureRecognizers>
+								<TapGestureRecognizer 
+									NumberOfTapsRequired="1"
+									Command="{Binding Source={RelativeSource AncestorType={x:Type gallery:GalleryViewModel}}, Path=PictureTapped}"		
+									CommandParameter="{Binding ImageUrl}">
+								</TapGestureRecognizer>
+							</Image.GestureRecognizers>
+						</Image>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+		
+	</ContentPage.Content>
+</ContentPage>

@@ -1,10 +1,6 @@
 ﻿using Pictura.ClientAndroid.Models;
 using Pictura.ClientAndroid.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Pictura.ClientAndroid.Views
 {

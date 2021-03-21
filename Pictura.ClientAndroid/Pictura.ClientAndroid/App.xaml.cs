@@ -1,19 +1,21 @@
-﻿using Pictura.ClientAndroid.Services;
-using Pictura.ClientAndroid.Views;
-using System;
+﻿using System.IO;
+using System.Reflection;
+using Pictura.ClientAndroid.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Pictura.ClientAndroid.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Pictura.ClientAndroid
 {
-	public partial class App : Application
+	public partial class App
 	{
-
 		public App()
 		{
 			InitializeComponent();
 
 			DependencyService.Register<MockDataStore>();
+			
 			MainPage = new AppShell();
 		}
 
