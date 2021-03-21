@@ -1,7 +1,5 @@
-﻿using Pictura.ClientAndroid.ViewModels;
-using Pictura.ClientAndroid.Views;
+﻿using Pictura.ClientAndroid.Views;
 using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid
@@ -13,6 +11,8 @@ namespace Pictura.ClientAndroid
 			InitializeComponent();
 			Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
 			Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+			Routing.RegisterRoute(nameof(GalleryPage), typeof(GalleryPage));
+			Routing.RegisterRoute(nameof(PictureFullScreenPage), typeof(PictureFullScreenPage));
 		}
 
 		private async void OnMenuItemClicked(object sender, EventArgs e)

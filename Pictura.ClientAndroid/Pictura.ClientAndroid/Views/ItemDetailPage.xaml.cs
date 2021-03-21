@@ -1,5 +1,4 @@
 ﻿using Pictura.ClientAndroid.ViewModels;
-using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid.Views

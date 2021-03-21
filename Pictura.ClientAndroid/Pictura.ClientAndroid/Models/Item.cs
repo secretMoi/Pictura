@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pictura.ClientAndroid.Models
+﻿namespace Pictura.ClientAndroid.Models
 {
 	public class Item
 	{
