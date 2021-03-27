@@ -3,11 +3,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:gallery="clr-namespace:Pictura.ClientAndroid.ViewModels.Gallery;assembly=Pictura.ClientAndroid"
-             x:Class="Pictura.ClientAndroid.Views.GalleryPage">
-	
-	<ContentPage.BindingContext>
-		<gallery:GalleryViewModel />
-	</ContentPage.BindingContext>
+             x:Class="Pictura.ClientAndroid.Views.GalleryPage"
+             x:DataType="gallery:GalleryViewModel">
 	
 	<ContentPage.Content>
 		
@@ -23,7 +20,7 @@
 						       Margin="30"
 						       Aspect="AspectFit"
 						       HeightRequest="128"
-						       WidthRequest="128" >
+						       WidthRequest="128">
 							<Image.GestureRecognizers>
 								<TapGestureRecognizer 
 									NumberOfTapsRequired="1"

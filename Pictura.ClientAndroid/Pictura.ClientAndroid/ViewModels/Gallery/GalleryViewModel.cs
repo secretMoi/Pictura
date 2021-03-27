@@ -1,17 +1,20 @@
 ﻿using System.Collections.ObjectModel;
 using Pictura.ClientAndroid.Views;
 using Xamarin.Forms;
+using INavigation = Pictura.ClientAndroid.Helpers.Navigation.INavigation;
 
 namespace Pictura.ClientAndroid.ViewModels.Gallery
 {
 	public class GalleryViewModel
 	{
+		private readonly INavigation _navigation;
 		public ObservableCollection<Monkey> Monkeys { get; set; }
 		
 		public Command<string> PictureTapped { get; }
 		
-		public GalleryViewModel()
+		public GalleryViewModel(INavigation navigation)
 		{
+			_navigation = navigation;
 			Monkeys = new ObservableCollection<Monkey>
 			{
 				new() {Name = "coucou", Location = "dans ton q", ImageUrl = "https://i.insider.com/5f8865662a400c0019debda6"},
@@ -31,7 +34,8 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 				return;
 
 			// This will push the ItemDetailPage onto the navigation stack
-			await Shell.Current.GoToAsync($"{nameof(PictureFullScreenPage)}?{nameof(PictureFullScreenViewModel.ImagePath)}={imagePath}");
+			await _navigation.PushAsync<PictureFullScreenPage>(nameof(PictureFullScreenViewModel.ImagePath), imagePath);
+			//await Shell.Current.GoToAsync($"{nameof(PictureFullScreenPage)}?{nameof(PictureFullScreenViewModel.ImagePath)}={imagePath}");
 		}
 	}
 

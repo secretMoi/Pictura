@@ -1,19 +1,25 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using Pictura.ClientAndroid.Views;
 using Xamarin.Forms;
+using INavigation = Pictura.ClientAndroid.Helpers.Navigation.INavigation;
 
 namespace Pictura.ClientAndroid.ViewModels.Gallery
 {
 	[QueryProperty(nameof(ImagePath), nameof(ImagePath))]
 	public class PictureFullScreenViewModel : BaseViewModel
 	{
-		public PictureFullScreenViewModel()
+		private readonly INavigation _navigation;
+
+		public PictureFullScreenViewModel(INavigation navigation)
 		{
-			SwipedDownCommand = new Command(OnPictureSwipedDown);
+			_navigation = navigation;
+			SwipedDownCommand = new Command(async () => await OnPictureSwipedDown());
 		}
 
-		private void OnPictureSwipedDown()
+		private async Task OnPictureSwipedDown()
 		{
-			
+			await _navigation.GoBackAsync();
 		}
 
 		public ICommand SwipedDownCommand { get; set; }

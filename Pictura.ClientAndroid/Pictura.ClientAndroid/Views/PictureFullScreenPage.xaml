@@ -2,12 +2,9 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Pictura.ClientAndroid.Views.PictureFullScreenPage"
              xmlns:gallery="clr-namespace:Pictura.ClientAndroid.ViewModels.Gallery;assembly=Pictura.ClientAndroid"
-             x:Class="Pictura.ClientAndroid.Views.PictureFullScreenPage">
-	
-	<ContentPage.BindingContext>
-		<gallery:PictureFullScreenViewModel />
-	</ContentPage.BindingContext>
+             x:DataType="gallery:PictureFullScreenViewModel">
 	
 	<ContentPage.Content>
 		<Grid>

@@ -14,15 +14,15 @@ namespace Pictura.ClientAndroid.Helpers.Routes
 		
 		public void RegisterRoute<T>() where T : Page
 		{
-			Type type = typeof(T); // récupère le type
-			string route = RouteName(type.ToString());
+			var type = typeof(T); // récupère le type
+			var route = RouteName(type.ToString());
 			
 			Routing.RegisterRoute(route, type);
 		}
 
 		public string RouteName(string completeNamespace)
 		{
-			string route = completeNamespace.Remove(0, _viewNamespace.Length); // ne garde que les dossiers dans view
+			var route = completeNamespace.Remove(0, _viewNamespace.Length); // ne garde que les dossiers dans view
 			return route.Replace('.', '/'); // remplace les . du namespace par des / pour créer la route
 		}
 	}
