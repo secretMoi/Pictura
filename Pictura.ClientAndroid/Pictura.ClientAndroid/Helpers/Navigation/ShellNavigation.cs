@@ -5,15 +5,21 @@ using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid.Helpers.Navigation
 {
-	public class Navigation : INavigation
+	public class ShellNavigation : INavigation
 	{
 		private readonly IRoute _route;
-		
-		public Navigation(IRoute route)
+		private readonly AppShell _appShell;
+
+		public ShellNavigation(IRoute route, AppShell appShell)
 		{
 			_route = route ?? throw new ArgumentNullException(nameof(route));
+			_appShell = appShell;
 		}
 		
+		/**
+		 * <summary>Définit la page d'accueil</summary>
+		 * <param name="page">Chemin de la page</param>
+		 */
 		public Task AsRootPage(Page page)
 		{
 			if (page == null) throw new ArgumentNullException(nameof(page));
@@ -21,14 +27,21 @@ namespace Pictura.ClientAndroid.Helpers.Navigation
 			return Shell.Current.GoToAsync("//" + page);
 		}
 
+		/**
+		 * <summary>Change de flow</summary>
+		 * <param name="page">Nouveau flow</param>
+		 */
 		public void ChangeFlow(Page page)
 		{
 			Application.Current.MainPage = page ?? throw new ArgumentNullException(nameof(page));
 		}
 		
+		/**
+		 * <summary>Reviens dans le flow principal</summary>
+		 */
 		public void GoToMainFlow()
 		{
-			ChangeFlow(new AppShell());
+			ChangeFlow(_appShell);
 		}
 		
 		public void GoToLogInFlow()
@@ -36,6 +49,9 @@ namespace Pictura.ClientAndroid.Helpers.Navigation
 			//ChangeFlow(new LogInPage());
 		}
 
+		/**
+		 * <summary>Navigue vers une page sans paramètre</summary>
+		 */
 		public Task PushAsync<T>() where T : Page
 		{
 			return Shell.Current.GoToAsync(_route.RouteName(typeof(T).ToString()));
@@ -58,6 +74,14 @@ namespace Pictura.ClientAndroid.Helpers.Navigation
 				"=" +
 				data
 			);
+		}
+
+		/**
+		 * <summary>Permet de retourner une page en arrière</summary>
+		 */
+		public Task GoBackAsync()
+		{
+			return Shell.Current.GoToAsync("..");
 		}
 	}
 }
