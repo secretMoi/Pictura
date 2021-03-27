@@ -1,9 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
-using Pictura.ClientAndroid.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Pictura.ClientAndroid.ViewModels;
+﻿using Pictura.ClientAndroid.Services;
 using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid

@@ -11,7 +11,11 @@
 	
 	<ContentPage.Content>
 		<Grid>
-			<Image Source="{Binding ImagePath}" />
+			<Image Source="{Binding ImagePath}" >
+				<Image.GestureRecognizers>
+					<SwipeGestureRecognizer Direction="Down" Command="{Binding SwipedDownCommand}" CommandParameter="Down" />
+				</Image.GestureRecognizers>
+			</Image>
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>
