@@ -8,19 +8,17 @@
 	
 	<ContentPage.Content>
 		
-		<CollectionView ItemsSource="{Binding Monkeys}">
+		<CollectionView ItemsSource="{Binding Monkeys}" Margin="10">
 			
 			<CollectionView.ItemsLayout>
-				<GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="1" />
+				<GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="3" VerticalItemSpacing="3" />
 			</CollectionView.ItemsLayout>
 			
 			<CollectionView.ItemTemplate>
 				<DataTemplate>
-						<Image Source="{Binding ImageUrl}"
-						       Margin="30"
-						       Aspect="AspectFit"
-						       HeightRequest="128"
-						       WidthRequest="128">
+					<Frame BackgroundColor="Black" HeightRequest="128" WidthRequest="128" Padding="0" Margin="0">
+						<Image Source="{Binding ImageUrl}" x:DataType="gallery:Monkey"
+						       Aspect="AspectFill" HeightRequest="128" WidthRequest="128">
 							<Image.GestureRecognizers>
 								<TapGestureRecognizer 
 									NumberOfTapsRequired="1"
@@ -29,6 +27,7 @@
 								</TapGestureRecognizer>
 							</Image.GestureRecognizers>
 						</Image>
+					</Frame>
 				</DataTemplate>
 			</CollectionView.ItemTemplate>
 		</CollectionView>
