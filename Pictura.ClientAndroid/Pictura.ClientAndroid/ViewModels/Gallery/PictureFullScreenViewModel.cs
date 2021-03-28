@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using Pictura.ClientAndroid.Views;
 using Xamarin.Forms;
 using INavigation = Pictura.ClientAndroid.Helpers.Navigation.INavigation;
 
