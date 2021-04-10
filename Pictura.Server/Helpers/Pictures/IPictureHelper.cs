@@ -1,7 +1,9 @@
-﻿namespace Pictura.Server.Helpers.Pictures
+﻿using System.Threading.Tasks;
+
+namespace Pictura.Server.Helpers.Pictures
 {
 	public interface IPictureHelper
 	{
-		string[] GetAllFiles();
+		Task<string[]> GetAllFilesAsync();
 	}
 }

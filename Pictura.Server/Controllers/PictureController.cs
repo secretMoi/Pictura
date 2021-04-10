@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using Pictura.Server.Helpers.Json;
 using Pictura.Server.Helpers.Pictures;
+using Pictura.Shared.Models;
 
 namespace Pictura.Server.Controllers
 {
@@ -22,6 +24,7 @@ namespace Pictura.Server.Controllers
 		{
 			_logger = logger;
 			_pictureHelper = pictureHelper;
+			
 			_pictureConfiguration = configuration
 				.GetSection("PictureHelper")
 				.Get<PictureConfigurationModel>();
@@ -30,8 +33,21 @@ namespace Pictura.Server.Controllers
 		[HttpGet]
 		public async Task<IActionResult> SayHello()
 		{
-			var t = _pictureHelper.GetAllFiles();
-			return Ok(await Task.Run(() => "hello"));
+			var filesOnDisk = await _pictureHelper.GetAllFilesAsync();
+
+			var filesToReturn = new Collection<PictureTransferModel>();
+			int id = 0;
+			foreach (var file in filesOnDisk)
+			{
+				filesToReturn.Add(new PictureTransferModel
+					{
+						Id = id,
+						Path = file
+					}
+				);
+				id++;
+			}
+			return Ok(filesToReturn);
 		}
 	}
 }
