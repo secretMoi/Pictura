@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Pictura.Server.Helpers.Json;
 
@@ -16,24 +17,25 @@ namespace Pictura.Server.Helpers.Pictures
 				.Get<PictureConfigurationModel>();
 		}
 
-		public string[] GetAllFiles()
+		public async Task<string[]> GetAllFilesAsync()
 		{
-			var filters = new [] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "svg" };
-			return GetFilesFrom(_pictureConfiguration.Path, filters, true);
-			//return Directory.GetFiles(_pictureConfiguration.Path, extensions, SearchOption.AllDirectories);
+			return await GetFilesFromAsync(_pictureConfiguration.Path, _pictureConfiguration.FileFormats, true);
 		}
 		
-		private string[] GetFilesFrom(string searchFolder, string[] extensions, bool isRecursive)
+		private async Task<string[]> GetFilesFromAsync(string searchFolder, string[] extensions, bool isRecursive)
 		{
 			var filesFound = new List<string>();
 			var searchOption = isRecursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-			
-			foreach (var filter in extensions)
+
+			return await Task.Run(() =>
 			{
-				filesFound.AddRange(Directory.GetFiles(searchFolder, $"*.{filter}", searchOption));
-			}
-			
-			return filesFound.ToArray();
+				foreach (var filter in extensions)
+				{
+					filesFound.AddRange(Directory.GetFiles(searchFolder, $"*.{filter}", searchOption));
+				}
+				
+				return filesFound.ToArray();
+			});
 		}
 	}
 }
