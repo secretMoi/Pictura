@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Pictura.Server.Helpers.Json;
 using Pictura.Server.Helpers.Pictures;
+using Pictura.Server.Services.Data.Picture;
 using Pictura.Shared.Models;
 
 namespace Pictura.Server.Controllers
@@ -16,15 +17,17 @@ namespace Pictura.Server.Controllers
 	{
 		private readonly ILogger<WeatherForecastController> _logger;
 		private readonly IPictureHelper _pictureHelper;
+		private readonly IPictureRepo _pictureRepo;
 		private readonly IConfigurationSection _pictureSectionConfiguration;
 		private readonly PictureConfigurationModel _pictureConfiguration;
 
 		public PictureController(ILogger<WeatherForecastController> logger, IConfiguration configuration,
-			IPictureHelper pictureHelper)
+			IPictureHelper pictureHelper, IPictureRepo pictureRepo)
 		{
 			_logger = logger;
 			_pictureHelper = pictureHelper;
-			
+			_pictureRepo = pictureRepo;
+
 			_pictureConfiguration = configuration
 				.GetSection("PictureHelper")
 				.Get<PictureConfigurationModel>();
@@ -48,6 +51,14 @@ namespace Pictura.Server.Controllers
 				id++;
 			}
 			return Ok(filesToReturn);
+		}
+		
+		[HttpGet]
+		public async Task<IActionResult> SayHello2()
+		{
+			var t = await _pictureRepo.GetAllAsync();
+			
+			return Ok();
 		}
 	}
 }

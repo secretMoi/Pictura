@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pictura.Server.Helpers.Pictures;
+using Pictura.Server.Services.Data;
+using Pictura.Server.Services.Data.Picture;
 
 namespace Pictura.Server
 {
@@ -19,6 +22,14 @@ namespace Pictura.Server
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddDbContext<Context>(opt => opt.UseLazyLoadingProxies()
+				.UseSqlServer(
+					Configuration.GetConnectionString("WallonsConnection"), 
+					x => x.UseNetTopologySuite()
+				));
+			
+			services.AddScoped<IPictureRepo, PictureRepo>();
+			
 			services.AddControllers();
 
 			services.AddSingleton<IPictureHelper, PictureHelper>();
