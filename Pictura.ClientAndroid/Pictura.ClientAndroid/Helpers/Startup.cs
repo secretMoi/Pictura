@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Pictura.ClientAndroid.Helpers.Navigation;
 using Pictura.ClientAndroid.Helpers.Routes;
+using Pictura.ClientAndroid.Services.ServerConnection;
 using Pictura.ClientAndroid.ViewModels.Gallery;
 using Pictura.ClientAndroid.Views;
 using Xamarin.Essentials;
@@ -14,7 +15,7 @@ namespace Pictura.ClientAndroid.Helpers
 {
 	public static class Startup
 	{
-		public static IServiceProvider ServiceProvider { get; set; }
+		public static IServiceProvider ServiceProvider { get; private set; }
 		
 		public static void Init()
 		{
@@ -34,6 +35,8 @@ namespace Pictura.ClientAndroid.Helpers
 
 			//Save our service provider so we can use it later.
 			ServiceProvider = host.Services;
+			
+			ServiceProvider.GetService<IServerConnection>().InitializeClient();
 		}
 
 		static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
@@ -49,7 +52,9 @@ namespace Pictura.ClientAndroid.Helpers
 			}
 
 			services.AddSingleton<IRoute>(new Route("Pictura.ClientAndroid.Views"));
-			
+			services.AddSingleton<IServerConnection, ServerConnection>();
+			services.AddSingleton<IServerConnection, ServerConnection>();
+
 			services.AddSingleton<GalleryViewModel>();
 			services.AddSingleton<PictureFullScreenViewModel>();
 			services.AddSingleton<AppShell>();
