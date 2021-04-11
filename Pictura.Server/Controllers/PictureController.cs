@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 using Pictura.Server.Helpers.Json;
 using Pictura.Server.Helpers.Pictures;
 using Pictura.Server.Services.Data.Picture;
+using Pictura.Shared.Extensions;
 using Pictura.Shared.Models;
 
 namespace Pictura.Server.Controllers
@@ -28,12 +28,10 @@ namespace Pictura.Server.Controllers
 			_pictureHelper = pictureHelper;
 			_pictureRepo = pictureRepo;
 
-			_pictureConfiguration = configuration
-				.GetSection("PictureHelper")
-				.Get<PictureConfigurationModel>();
+			_pictureConfiguration = configuration.GetModelFromSection<PictureConfigurationModel>("PictureHelper");
 		}
 
-		[HttpGet]
+		[HttpGet("FilesFromDisk", Name = "FilesFromDisk")]
 		public async Task<IActionResult> SayHello()
 		{
 			var filesOnDisk = await _pictureHelper.GetAllFilesAsync();
@@ -50,15 +48,16 @@ namespace Pictura.Server.Controllers
 				);
 				id++;
 			}
+			
 			return Ok(filesToReturn);
 		}
 		
-		[HttpGet]
+		[HttpGet("FilesFromBd", Name = "FilesFromBd")]
 		public async Task<IActionResult> SayHello2()
 		{
 			var t = await _pictureRepo.GetAllAsync();
 			
-			return Ok();
+			return Ok(t);
 		}
 	}
 }
