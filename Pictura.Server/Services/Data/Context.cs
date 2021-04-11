@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Pictura.Server.Services.Data.Picture;
 
 namespace Pictura.Server.Services.Data
 {

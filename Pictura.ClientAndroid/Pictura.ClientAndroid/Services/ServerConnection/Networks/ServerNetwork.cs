@@ -9,7 +9,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 {
 	public class ServerNetwork<T> : IServerNetwork<T>
 	{
-		private readonly HttpClient _serverConnection;
+		protected readonly HttpClient ServerConnection;
 		protected string Url;
 		protected readonly List<BaseMethod> BaseMethods;
 
@@ -24,7 +24,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 
 		public ServerNetwork(IServerConnection serverConnection)
 		{
-			_serverConnection = serverConnection.ApiClient;
+			ServerConnection = serverConnection.ApiClient;
 			BaseMethods = new List<BaseMethod>();
 		}
 
@@ -69,14 +69,14 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 		 * <param name="id">Id de l'enregistrement à récupérer</param>
 		 * <returns>Renvoie le model cherché</returns>
 		 */
-		public virtual async Task<T> GetById(int id)
+		public virtual async Task<T> GetByIdAsync(int id)
 		{
 			if (!BaseMethods.Contains(BaseMethod.GetId)) return default;
 
 			var url = MakeUrl("Afficher", id);
 
 			// fais une req sur l'url et attend la réponse
-			using var response = await _serverConnection.GetAsync(url);
+			using var response = await ServerConnection.GetAsync(url);
 			if (response.IsSuccessStatusCode)
 			{
 				// map le json lu dans la req http dans le model
@@ -92,14 +92,14 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 		 * <summary>Requête sélectionnant tous les éléments</summary>
 		 * <returns>Renvoie une liste des models trouvés</returns>
 		 */
-		public virtual async Task<IList<T>> GetAll()
+		public virtual async Task<IList<T>> GetAllAsync()
 		{
 			if (!BaseMethods.Contains(BaseMethod.GetAll)) return default;
 
 			var url = MakeUrl("Afficher");
 
 			// fais une req sur l'url et attend la réponse
-			using var response = await _serverConnection.GetAsync(url);
+			using var response = await ServerConnection.GetAsync(url);
 			if (response.IsSuccessStatusCode)
 			{
 				// map le json lu dans la req http dans le model
@@ -115,7 +115,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 		 * <summary>Requête modifiant un enregistremen</summary>
 		 * <param name="data">Model de l'enregistrement à envoyer</param>
 		 */
-		public virtual async Task Update(T data)
+		public virtual async Task UpdateAsync(T data)
 		{
 			if (!BaseMethods.Contains(BaseMethod.Update)) return;
 
@@ -124,7 +124,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 			var dataJson = SerializeAsJson(data);
 
 			// fais une req sur l'url et attend la réponse
-			using var response = await _serverConnection.PutAsync(url, dataJson);
+			using var response = await ServerConnection.PutAsync(url, dataJson);
 			await response.Content.ReadAsStringAsync();
 		}
 
@@ -133,7 +133,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 		 * <param name="input">Model à envoyer et créer</param>
 		 * <returns>Renvoie le model créé</returns>
 		 */
-		public virtual async Task Post(T input)
+		public virtual async Task PostAsync(T input)
 		{
 			if (!BaseMethods.Contains(BaseMethod.Post)) return;
 
@@ -144,7 +144,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 			//string result = null;
 
 			// fais une req sur l'url et attend la réponse
-			await _serverConnection.PostAsync(url, dataJson);
+			await ServerConnection.PostAsync(url, dataJson);
 		}
 
 		/**
@@ -152,13 +152,13 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 		 * <param name="id">Id de l'enregistrement à supprimer</param>
 		 * <returns>Renvoie le model supprimé</returns>
 		 */
-		public virtual async Task Delete(int id)
+		public virtual async Task DeleteAsync(int id)
 		{
 			if (!BaseMethods.Contains(BaseMethod.Delete)) return;
 
 			var url = MakeUrl("Supprimer", id);
 
-			await _serverConnection.DeleteAsync(url);
+			await ServerConnection.DeleteAsync(url);
 		}
 	}
 }
