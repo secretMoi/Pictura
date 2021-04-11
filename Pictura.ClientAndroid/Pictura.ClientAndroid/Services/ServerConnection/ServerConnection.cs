@@ -27,7 +27,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection
 			ServicePointManager.ServerCertificateValidationCallback +=
 				(sender, cert, chain, sslPolicyErrors) => true;
 
-			_apiClient = new HttpClient();
+			_apiClient = new HttpClient(GetInsecureHandler());
 
 			// set une addresse de base (ex : http://xkcd.com/ , qui permet de manipuler plusieurs liens api de ce site)
 			_apiClient.BaseAddress = new Uri(_serverConfiguration.Address);
@@ -36,6 +36,15 @@ namespace Pictura.ClientAndroid.Services.ServerConnection
 
 			// crée un header qui demande du json
 			_apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+		}
+		
+		public HttpClientHandler GetInsecureHandler()
+		{
+			var handler = new HttpClientHandler
+			{
+				ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+			};
+			return handler;
 		}
 	}
 }

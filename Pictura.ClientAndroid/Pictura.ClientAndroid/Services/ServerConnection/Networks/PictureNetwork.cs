@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Pictura.Shared.Models;
 
@@ -19,23 +21,30 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 			);
 		}
 
-		// public async Task<PictureTransferModel> ByMail(string mail)
-		// {
-		// 	string url = MakeUrl("ParMail");
-		//
-		// 	Client model = new Client
-		// 	{
-		// 		Mail = mail
-		// 	};
-		// 	StringContent dataJson = SerializeAsJson(model);
-		//
-		// 	// fais une req sur l'url et attend la réponse
-		// 	using (HttpResponseMessage response = await Api.ApiClient.PostAsync(url, dataJson))
-		// 	{
-		// 		model = await response.Content.ReadAsAsync<Client>();
-		// 	}
-		//
-		// 	return model;
-		// }
+		public async Task<IList<PictureTransferModel>> GetFilesFromDisk()
+		{
+			var url = MakeUrl("FilesFromDisk");
+
+			try
+			{
+// fais une req sur l'url et attend la réponse
+				using var response = await ServerConnection.GetAsync(url);
+				if (response.IsSuccessStatusCode)
+				{
+					// map le json lu dans la req http dans le model
+					var data = await response.Content.ReadAsAsync<IList<PictureTransferModel>>();
+
+					return data;
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+
+			return null;
+			//throw new Exception(response.ReasonPhrase);
+		}
 	}
 }
