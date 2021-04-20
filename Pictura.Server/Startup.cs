@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Pictura.Server.Helpers.Pictures;
 using Pictura.Server.Services.Data;
 using Pictura.Server.Services.Data.Picture;
+using Pictura.Server.Services.File;
 
 namespace Pictura.Server
 {
@@ -33,6 +34,7 @@ namespace Pictura.Server
 			services.AddControllers();
 
 			services.AddSingleton<IPictureHelper, PictureHelper>();
+			services.AddSingleton<IFileService, File>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
