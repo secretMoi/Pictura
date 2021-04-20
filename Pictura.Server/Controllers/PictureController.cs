@@ -23,7 +23,7 @@ namespace Pictura.Server.Controllers
 		private readonly IPictureHelper _pictureHelper;
 		private readonly IPictureRepo _pictureRepo;
 		private readonly IFileService _fileService;
-		private readonly PictureConfigurationModel _pictureConfiguration;
+		private readonly PictureOptions _pictureConfiguration;
 
 		public PictureController(IConfiguration configuration, IPictureHelper pictureHelper, IPictureRepo pictureRepo, 
 			IFileService fileService)
@@ -32,7 +32,7 @@ namespace Pictura.Server.Controllers
 			_pictureRepo = pictureRepo;
 			_fileService = fileService;
 
-			_pictureConfiguration = configuration.GetModelFromSection<PictureConfigurationModel>("Picture");
+			_pictureConfiguration = configuration.GetModelFromSection<PictureOptions>("Picture");
 		}
 
 		[HttpGet("FilesFromDisk", Name = "FilesFromDisk")]
@@ -65,7 +65,7 @@ namespace Pictura.Server.Controllers
 		}
 		
 		[HttpPost("Upload", Name = "Upload")]
-		public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files)
+		public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files, [FromForm] string[] extraInfo)
 		{
 			var size = files.Sum(f => f.Length);
 
