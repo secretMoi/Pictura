@@ -8,13 +8,13 @@ namespace Pictura.Server.Helpers.Pictures
 {
 	public class PictureHelper : IPictureHelper
 	{
-		private readonly PictureConfigurationModel _pictureConfiguration;
+		private readonly PictureOptions _pictureConfiguration;
 
 		public PictureHelper(IConfiguration configuration)
 		{
 			_pictureConfiguration = configuration
 				.GetSection("Picture")
-				.Get<PictureConfigurationModel>();
+				.Get<PictureOptions>();
 		}
 
 		public async Task<string[]> GetAllFilesAsync()

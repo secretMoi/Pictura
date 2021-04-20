@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pictura.Server.Helpers.Pictures;
+using Pictura.Server.Models;
 using Pictura.Server.Services.Data;
 using Pictura.Server.Services.Data.Picture;
 using Pictura.Server.Services.File;
@@ -28,6 +29,8 @@ namespace Pictura.Server
 					Configuration.GetConnectionString("WallonsConnection"), 
 					x => x.UseNetTopologySuite()
 				));
+			
+			services.Configure<PictureOptions>(Configuration.GetSection("Picture"));
 			
 			services.AddScoped<IPictureRepo, PictureRepo>();
 			
