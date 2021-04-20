@@ -1,11 +1,16 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pictura.Server.Helpers.Json;
 using Pictura.Server.Helpers.Pictures;
+using Pictura.Server.Models;
 using Pictura.Server.Services.Data.Picture;
+using Pictura.Server.Services.File;
 using Pictura.Shared.Extensions;
 using Pictura.Shared.Models;
 
@@ -15,20 +20,19 @@ namespace Pictura.Server.Controllers
 	[Route("[controller]")]
 	public class PictureController : ControllerBase
 	{
-		private readonly ILogger<WeatherForecastController> _logger;
 		private readonly IPictureHelper _pictureHelper;
 		private readonly IPictureRepo _pictureRepo;
-		private readonly IConfigurationSection _pictureSectionConfiguration;
+		private readonly IFileService _fileService;
 		private readonly PictureConfigurationModel _pictureConfiguration;
 
-		public PictureController(ILogger<WeatherForecastController> logger, IConfiguration configuration,
-			IPictureHelper pictureHelper, IPictureRepo pictureRepo)
+		public PictureController(IConfiguration configuration, IPictureHelper pictureHelper, IPictureRepo pictureRepo, 
+			IFileService fileService)
 		{
-			_logger = logger;
 			_pictureHelper = pictureHelper;
 			_pictureRepo = pictureRepo;
+			_fileService = fileService;
 
-			_pictureConfiguration = configuration.GetModelFromSection<PictureConfigurationModel>("PictureHelper");
+			_pictureConfiguration = configuration.GetModelFromSection<PictureConfigurationModel>("Picture");
 		}
 
 		[HttpGet("FilesFromDisk", Name = "FilesFromDisk")]
@@ -58,6 +62,16 @@ namespace Pictura.Server.Controllers
 			var t = await _pictureRepo.GetAllAsync();
 			
 			return Ok(t);
+		}
+		
+		[HttpPost("Upload", Name = "Upload")]
+		public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files)
+		{
+			var size = files.Sum(f => f.Length);
+
+			await _fileService.SaveFilesAsync(files);
+
+			return Ok(new { count = files.Count, size });
 		}
 	}
 }

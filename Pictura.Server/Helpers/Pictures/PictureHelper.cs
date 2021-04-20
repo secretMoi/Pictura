@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Pictura.Server.Helpers.Json;
+using Pictura.Server.Models;
 
 namespace Pictura.Server.Helpers.Pictures
 {
