@@ -33,9 +33,7 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 			if (string.IsNullOrWhiteSpace(imagePath))
 				return;
 
-			// This will push the ItemDetailPage onto the navigation stack
 			await _navigation.PushAsync<PictureFullScreenPage>(nameof(PictureFullScreenViewModel.ImagePath), imagePath);
-			//await Shell.Current.GoToAsync($"{nameof(PictureFullScreenPage)}?{nameof(PictureFullScreenViewModel.ImagePath)}={imagePath}");
 		}
 	}
 
