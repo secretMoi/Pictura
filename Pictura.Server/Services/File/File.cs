@@ -2,10 +2,8 @@
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Pictura.Server.Models;
-using Pictura.Shared.Extensions;
 
 namespace Pictura.Server.Services.File
 {
@@ -25,9 +23,12 @@ namespace Pictura.Server.Services.File
 		{
 			if (file.Length > 0)
 			{
-				var filePath = _pictureOptions.SavePath;
+				var fullSavePath = _pictureOptions.SavePath + file.FileName;
 
-				await using var stream = System.IO.File.Create(filePath + file.FileName);
+				if(System.IO.File.Exists(fullSavePath))
+					System.IO.File.Delete(fullSavePath);
+				
+				await using var stream = System.IO.File.Create(fullSavePath);
 				await file.CopyToAsync(stream);
 			}
 		}

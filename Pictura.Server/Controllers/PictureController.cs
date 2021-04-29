@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Pictura.Server.Helpers.Pictures;
 using Pictura.Server.Models;
 using Pictura.Server.Services.Data.Picture;
@@ -36,7 +34,7 @@ namespace Pictura.Server.Controllers
 		}
 
 		[HttpGet("FilesFromDisk", Name = "FilesFromDisk")]
-		public async Task<IActionResult> SayHello()
+		public async Task<IActionResult> GetAllPicturesFromDisk()
 		{
 			var filesOnDisk = await _pictureHelper.GetAllFilesAsync();
 
@@ -57,7 +55,7 @@ namespace Pictura.Server.Controllers
 		}
 		
 		[HttpGet("FilesFromBd", Name = "FilesFromBd")]
-		public async Task<IActionResult> SayHello2()
+		public async Task<IActionResult> GetAllPicturesFromDatabase()
 		{
 			var t = await _pictureRepo.GetAllAsync();
 			
@@ -67,7 +65,7 @@ namespace Pictura.Server.Controllers
 		[HttpPost("Upload", Name = "Upload")]
 		public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files, [FromForm] string[] extraInfo)
 		{
-			var size = files.Sum(f => f.Length);
+			var size = files.Sum(file => file.Length);
 
 			await _fileService.SaveFilesAsync(files);
 

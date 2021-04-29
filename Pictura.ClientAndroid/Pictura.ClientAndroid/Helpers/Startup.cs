@@ -35,8 +35,8 @@ namespace Pictura.ClientAndroid.Helpers
 			//Save our service provider so we can use it later.
 			ServiceProvider = host.Services;
 			
-			ServiceProvider.GetService<IServerConnection>().InitializeClient();
-			ServiceProvider.GetService<IPictureNetwork>().GetFilesFromDisk();
+			ServiceProvider.GetService<IServerConnection>()?.InitializeClient();
+			ServiceProvider.GetService<IPictureNetwork>()?.GetFilesFromDisk();
 		}
 
 		static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
