@@ -4,15 +4,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Pictura.ClientAndroid.Views.PictureFullScreenPage"
              xmlns:gallery="clr-namespace:Pictura.ClientAndroid.ViewModels.Gallery;assembly=Pictura.ClientAndroid"
+             xmlns:customControls="clr-namespace:Pictura.ClientAndroid.CustomControls;assembly=Pictura.ClientAndroid"
              x:DataType="gallery:PictureFullScreenViewModel">
 	
 	<ContentPage.Content>
 		<Grid>
-			<Image Source="{Binding ImagePath}" >
-				<Image.GestureRecognizers>
-					<SwipeGestureRecognizer Direction="Down" Command="{Binding SwipedDownCommand}" CommandParameter="Down" />
-				</Image.GestureRecognizers>
-			</Image>
+			<!-- <Image Source="{Binding ImagePath}" > -->
+			<!-- 	<Image.GestureRecognizers> -->
+			<!-- 		<SwipeGestureRecognizer Direction="Down" Command="{Binding SwipedDownCommand}" CommandParameter="Down" /> -->
+			<!-- 	</Image.GestureRecognizers> -->
+			<!-- </Image> -->
+			
+			<customControls:PinchToZoomContainer>
+				<customControls:PinchToZoomContainer.Content>
+					<Image Source="{Binding ImagePath}" >
+						<Image.GestureRecognizers>
+							<SwipeGestureRecognizer Direction="Down" Command="{Binding SwipedDownCommand}" CommandParameter="Down" />
+						</Image.GestureRecognizers>
+					</Image>
+				</customControls:PinchToZoomContainer.Content>
+			</customControls:PinchToZoomContainer>
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>
