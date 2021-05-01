@@ -5,12 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Pictura.Server.Helpers.Pictures;
-using Pictura.Server.Models;
 using Pictura.Server.Services.Data.Picture;
 using Pictura.Server.Services.File;
-using Pictura.Shared.Extensions;
 using Pictura.Shared.Models;
 
 namespace Pictura.Server.Controllers
@@ -22,16 +19,12 @@ namespace Pictura.Server.Controllers
 		private readonly IPictureHelper _pictureHelper;
 		private readonly IPictureRepo _pictureRepo;
 		private readonly IFileService _fileService;
-		private readonly PictureOptions _pictureConfiguration;
 
-		public PictureController(IConfiguration configuration, IPictureHelper pictureHelper, IPictureRepo pictureRepo, 
-			IFileService fileService)
+		public PictureController(IPictureHelper pictureHelper, IPictureRepo pictureRepo, IFileService fileService)
 		{
 			_pictureHelper = pictureHelper;
 			_pictureRepo = pictureRepo;
 			_fileService = fileService;
-
-			_pictureConfiguration = configuration.GetModelFromSection<PictureOptions>("Picture");
 		}
 
 		[HttpGet("FilesFromDisk", Name = "FilesFromDisk")]

@@ -32,7 +32,7 @@ namespace Pictura.ClientAndroid.Services
 
 		public async Task<bool> UpdateItemAsync(Item item)
 		{
-			var oldItem = _items.Where((Item arg) => arg.Id == item.Id).FirstOrDefault();
+			var oldItem = _items.Where(arg => arg.Id == item.Id).FirstOrDefault();
 			_items.Remove(oldItem);
 			_items.Add(item);
 
@@ -41,7 +41,7 @@ namespace Pictura.ClientAndroid.Services
 
 		public async Task<bool> DeleteItemAsync(string id)
 		{
-			var oldItem = _items.Where((Item arg) => arg.Id == id).FirstOrDefault();
+			var oldItem = _items.Where((arg) => arg.Id == id).FirstOrDefault();
 			_items.Remove(oldItem);
 
 			return await Task.FromResult(true);
