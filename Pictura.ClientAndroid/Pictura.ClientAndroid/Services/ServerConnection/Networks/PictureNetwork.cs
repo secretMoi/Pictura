@@ -34,6 +34,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 				{
 					multipartContent.Add(new StreamContent(fileStream), "files", Path.GetFileName(fileStream.Name));
 				}
+				
 				using var response = await ServerConnection.PostAsync(url, multipartContent);
 			}
 			catch (Exception e)

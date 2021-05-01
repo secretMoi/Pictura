@@ -17,13 +17,13 @@
 			<CollectionView.ItemTemplate>
 				<DataTemplate>
 					<Frame BackgroundColor="Black" HeightRequest="128" WidthRequest="128" Padding="0" Margin="0">
-						<Image Source="{Binding ImageUrl}" x:DataType="gallery:Monkey"
+						<Image Source="{Binding Path}" x:DataType="gallery:PictureModel"
 						       Aspect="AspectFill" HeightRequest="128" WidthRequest="128">
 							<Image.GestureRecognizers>
 								<TapGestureRecognizer 
 									NumberOfTapsRequired="1"
 									Command="{Binding Source={RelativeSource AncestorType={x:Type gallery:GalleryViewModel}}, Path=PictureTapped}"		
-									CommandParameter="{Binding ImageUrl}">
+									CommandParameter="{Binding Path}">
 								</TapGestureRecognizer>
 							</Image.GestureRecognizers>
 						</Image>

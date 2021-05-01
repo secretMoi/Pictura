@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -67,10 +66,19 @@ namespace Pictura.Server.Controllers
 		[HttpPost("Upload", Name = "Upload")]
 		public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files)
 		{
-			Console.WriteLine("console");
+			Console.WriteLine($"Réception de {files.Count} médias uploadés");
 			var size = files.Sum(file => file.Length);
 
-			await _fileService.SaveFilesAsync(files);
+			try
+			{
+				await _fileService.SaveFilesAsync(files);
+				Console.WriteLine($"Les {files.Count} médias ont été sauvés");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return BadRequest();
+			}
 
 			return Ok(new { count = files.Count, size });
 		}
