@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 {
-	public class ServerNetwork<T> : IServerNetwork<T>
+	public abstract class ServerNetwork<T> : IServerNetwork<T>
 	{
 		protected readonly HttpClient ServerConnection;
 		protected string Url;

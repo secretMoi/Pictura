@@ -34,7 +34,7 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 			}
 		}
 
-		public async void LoadPicture(string itemId)
+		public void LoadPicture(string itemId)
 		{
 			/*try
 			{

@@ -6,33 +6,33 @@ namespace Pictura.ClientAndroid.ViewModels
 {
 	public class NewItemViewModel : BaseViewModel
 	{
-		private string text;
-		private string description;
+		private string _text;
+		private string _description;
 
 		public NewItemViewModel()
 		{
 			SaveCommand = new Command(OnSave, ValidateSave);
 			CancelCommand = new Command(OnCancel);
-			this.PropertyChanged +=
-				(_, __) => SaveCommand.ChangeCanExecute();
+			PropertyChanged +=
+				(_, _) => SaveCommand.ChangeCanExecute();
 		}
 
 		private bool ValidateSave()
 		{
-			return !String.IsNullOrWhiteSpace(text)
-				&& !String.IsNullOrWhiteSpace(description);
+			return !String.IsNullOrWhiteSpace(_text)
+				&& !String.IsNullOrWhiteSpace(_description);
 		}
 
 		public string Text
 		{
-			get => text;
-			set => SetProperty(ref text, value);
+			get => _text;
+			set => SetProperty(ref _text, value);
 		}
 
 		public string Description
 		{
-			get => description;
-			set => SetProperty(ref description, value);
+			get => _description;
+			set => SetProperty(ref _description, value);
 		}
 
 		public Command SaveCommand { get; }

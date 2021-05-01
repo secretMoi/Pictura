@@ -58,19 +58,19 @@
             <!--
             Custom Style you can apply to any Flyout Item
             -->
-            <Style Class="MenuItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
+            <!-- <Style Class="MenuItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True"> -->
+            <!--     <Setter Property="VisualStateManager.VisualStateGroups"> -->
+            <!--         <VisualStateGroupList> -->
+            <!--             <VisualStateGroup x:Name="CommonStates"> -->
+            <!--                 <VisualState x:Name="Normal"> -->
+            <!--                     <VisualState.Setters> -->
+            <!--                         <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" /> -->
+            <!--                     </VisualState.Setters> -->
+            <!--                 </VisualState> -->
+            <!--             </VisualStateGroup> -->
+            <!--         </VisualStateGroupList> -->
+            <!--     </Setter> -->
+            <!-- </Style> -->
         </ResourceDictionary>
     </Shell.Resources>
 

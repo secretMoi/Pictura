@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Pictura.Shared.Models;
@@ -21,13 +22,34 @@ namespace Pictura.ClientAndroid.Services.ServerConnection.Networks
 			);
 		}
 
-		public async Task<IList<PictureTransferModel>> GetFilesFromDisk()
+		public async Task PostStreamAsync(IEnumerable<FileStream> fileStreams)
+		{
+			var url = MakeUrl("Upload");
+
+			try
+			{
+				var multipartContent = new MultipartFormDataContent();
+
+				foreach (var fileStream in fileStreams)
+				{
+					multipartContent.Add(new StreamContent(fileStream), "files", Path.GetFileName(fileStream.Name));
+				}
+				using var response = await ServerConnection.PostAsync(url, multipartContent);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		
+		public async Task<IList<PictureTransferModel>> GetFilesFromDiskAsync()
 		{
 			var url = MakeUrl("FilesFromDisk");
 
 			try
 			{
-// fais une req sur l'url et attend la réponse
+				// fais une req sur l'url et attend la réponse
 				using var response = await ServerConnection.GetAsync(url);
 				if (response.IsSuccessStatusCode)
 				{

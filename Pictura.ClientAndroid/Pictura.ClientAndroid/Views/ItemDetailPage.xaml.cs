@@ -1,9 +1,8 @@
 ﻿using Pictura.ClientAndroid.ViewModels;
-using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid.Views
 {
-	public partial class ItemDetailPage : ContentPage
+	public partial class ItemDetailPage
 	{
 		public ItemDetailPage()
 		{

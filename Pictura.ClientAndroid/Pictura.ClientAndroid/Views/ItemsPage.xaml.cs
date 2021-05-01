@@ -1,11 +1,10 @@
 ﻿using Pictura.ClientAndroid.ViewModels;
-using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid.Views
 {
-	public partial class ItemsPage : ContentPage
+	public partial class ItemsPage
 	{
-		ItemsViewModel _viewModel;
+		private readonly ItemsViewModel _viewModel;
 
 		public ItemsPage()
 		{
