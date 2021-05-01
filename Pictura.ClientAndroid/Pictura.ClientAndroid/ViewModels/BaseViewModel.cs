@@ -12,7 +12,7 @@ namespace Pictura.ClientAndroid.ViewModels
 	{
 		public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
-		bool _isBusy = false;
+		bool _isBusy;
 		public bool IsBusy
 		{
 			get => _isBusy;

@@ -19,15 +19,14 @@ namespace Pictura.ClientAndroid.Helpers
 		
 		public static void Init()
 		{
-			var assembly = Assembly.GetExecutingAssembly();
-			using var stream = assembly.GetManifestResourceStream("Pictura.ClientAndroid.appsettings.json");
-			
 			var host = new HostBuilder()
 				.ConfigureHostConfiguration(c =>
 				{
 					// Tell the host configuration where to find the file (this is required for Xamarin apps)
 					c.AddCommandLine(new [] { $"ContentRoot={FileSystem.AppDataDirectory}" });
 					
+					var assembly = Assembly.GetExecutingAssembly();
+					using var stream = assembly.GetManifestResourceStream("Pictura.ClientAndroid.appsettings.json");
 					c.AddJsonStream(stream);
 				})
 				.ConfigureServices(ConfigureServices)

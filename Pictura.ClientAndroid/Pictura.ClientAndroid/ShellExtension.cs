@@ -24,7 +24,7 @@ namespace Pictura.ClientAndroid
 		{
 			return serviceCollection.AddTransient(serviceProvider =>
 			{
-				TView view = ActivatorUtilities.CreateInstance<TView>(serviceProvider);
+				var view = ActivatorUtilities.CreateInstance<TView>(serviceProvider);
 
 				// Automatically bind the view model
 				view.BindingContext = serviceProvider.GetRequiredService<TViewModel>();
