@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Pictura.ClientAndroid.Services.Files;
 using Pictura.ClientAndroid.Services.ServerConnection.Networks;
 using Pictura.ClientAndroid.Views;
@@ -14,7 +13,7 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		private readonly INavigation _navigation;
 		private readonly IFileService _fileService;
 		private readonly IPictureNetwork _pictureNetwork;
-		public ObservableCollection<Monkey> Monkeys { get; set; }
+		public ObservableCollection<PictureModel> Monkeys { get; set; }
 		
 		public Command<string> PictureTapped { get; }
 		
@@ -23,36 +22,32 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 			_navigation = navigation;
 			_fileService = fileService;
 			_pictureNetwork = pictureNetwork;
-			Monkeys = new ObservableCollection<Monkey>
-			{
-				new() {Name = "coucou", Location = "dans ton q", ImageUrl = "https://i.insider.com/5f8865662a400c0019debda6"},
-				new() {Name = "coucou", Location = "dans ton q", ImageUrl = "https://i.guim.co.uk/img/media/02088fb2247b13df646907d47f552dc69a236bc7/0_748_3235_1940/master/3235.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=172ccbaa7535c9e16d0455138d20a07c"},
-				new() {Name = "coucou", Location = "dans ton q", ImageUrl = "https://i.guim.co.uk/img/media/02088fb2247b13df646907d47f552dc69a236bc7/0_748_3235_1940/master/3235.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=172ccbaa7535c9e16d0455138d20a07c"},
-				new() {Name = "coucou", Location = "dans ton q", ImageUrl = "https://i.guim.co.uk/img/media/02088fb2247b13df646907d47f552dc69a236bc7/0_748_3235_1940/master/3235.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=172ccbaa7535c9e16d0455138d20a07c"},
-				new() {Name = "coucou", Location = "dans ton q", ImageUrl = "https://i.guim.co.uk/img/media/02088fb2247b13df646907d47f552dc69a236bc7/0_748_3235_1940/master/3235.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=172ccbaa7535c9e16d0455138d20a07c"},
-				new() {Name = "coucou", Location = "dans ton q", ImageUrl = "https://i.guim.co.uk/img/media/02088fb2247b13df646907d47f552dc69a236bc7/0_748_3235_1940/master/3235.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=172ccbaa7535c9e16d0455138d20a07c"},
-			};
+			Monkeys = new ObservableCollection<PictureModel>();
 
 			PictureTapped = new Command<string>(OnPictureTapped);
 			
-			ReadFiles();
+			LoadMedias();
 		}
 
-		private async void ReadFiles()
+		private async void LoadMedias()
 		{
 			try
 			{
 				var files = await _fileService.GetFilesFromDirectoryAsync("/storage/emulated/0/Download/");
+
+				foreach (var file in files)
+				{
+					Monkeys.Add(new PictureModel(file));
+				}
+				
 				var fileStreams = await _fileService.GetStreamsFromFilesAsync(files);
 
 				await _pictureNetwork.PostStreamAsync(fileStreams);
-
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
 			}
-			
 		}
 
 		private async void OnPictureTapped(string imagePath)
@@ -63,11 +58,13 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		}
 	}
 
-	public class Monkey
+	public class PictureModel
 	{
-		public string Name { get; set; }
-		public string Location { get; set; }
-		public string Details { get; set; }
-		public string ImageUrl { get; set; }
+		public string Path { get; set; }
+
+		public PictureModel(string path)
+		{
+			Path = path;
+		}
 	}
 }

@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Pictura.Server.Models;
+using Pictura.Shared.Models;
 
 namespace Pictura.Server.Helpers.Pictures
 {
@@ -19,7 +20,7 @@ namespace Pictura.Server.Helpers.Pictures
 
 		public async Task<string[]> GetAllFilesAsync()
 		{
-			return await GetFilesFromAsync(_pictureConfiguration.Path, _pictureConfiguration.FileFormats, true);
+			return await GetFilesFromAsync(_pictureConfiguration.Path, PictureModel.SupportedFilesFormat, true);
 		}
 		
 		private async Task<string[]> GetFilesFromAsync(string searchFolder, string[] extensions, bool isRecursive)
