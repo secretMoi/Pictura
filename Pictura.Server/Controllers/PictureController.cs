@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -63,8 +65,9 @@ namespace Pictura.Server.Controllers
 		}
 		
 		[HttpPost("Upload", Name = "Upload")]
-		public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files, [FromForm] string[] extraInfo)
+		public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files)
 		{
+			Console.WriteLine("console");
 			var size = files.Sum(file => file.Length);
 
 			await _fileService.SaveFilesAsync(files);

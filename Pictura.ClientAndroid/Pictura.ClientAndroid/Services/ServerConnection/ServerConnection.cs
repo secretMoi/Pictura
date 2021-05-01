@@ -25,7 +25,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection
 			// trust any certificate
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 			ServicePointManager.ServerCertificateValidationCallback +=
-				(sender, cert, chain, sslPolicyErrors) => true;
+				(_, _, _, _) => true;
 
 			_apiClient = new HttpClient(GetInsecureHandler());
 
@@ -42,7 +42,7 @@ namespace Pictura.ClientAndroid.Services.ServerConnection
 		{
 			var handler = new HttpClientHandler
 			{
-				ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+				ServerCertificateCustomValidationCallback = (_, _, _, _) => true
 			};
 			return handler;
 		}

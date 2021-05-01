@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pictura.ClientAndroid.Helpers.Navigation;
 using Pictura.ClientAndroid.Helpers.Routes;
+using Pictura.ClientAndroid.Services.Files;
 using Pictura.ClientAndroid.Services.ServerConnection;
 using Pictura.ClientAndroid.Services.ServerConnection.Networks;
 using Pictura.ClientAndroid.ViewModels.Gallery;
@@ -36,7 +37,7 @@ namespace Pictura.ClientAndroid.Helpers
 			ServiceProvider = host.Services;
 			
 			ServiceProvider.GetService<IServerConnection>()?.InitializeClient();
-			ServiceProvider.GetService<IPictureNetwork>()?.GetFilesFromDisk();
+			ServiceProvider.GetService<IPictureNetwork>()?.GetFilesFromDiskAsync();
 		}
 
 		static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
@@ -53,6 +54,7 @@ namespace Pictura.ClientAndroid.Helpers
 
 			services.AddSingleton<IRoute>(new Route("Pictura.ClientAndroid.Views"));
 			services.AddSingleton<IServerConnection, ServerConnection>();
+			services.AddSingleton<IFileService, FileService>();
 			services.AddSingleton<IPictureNetwork, PictureNetwork>();
 
 			services.AddSingleton<GalleryViewModel>();
