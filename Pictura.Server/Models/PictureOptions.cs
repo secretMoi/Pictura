@@ -1,8 +1,12 @@
-﻿namespace Pictura.Server.Models
+﻿using System;
+using System.IO;
+
+namespace Pictura.Server.Models
 {
 	public class PictureOptions
 	{
-		public string Path { get; init; }
-		public string SavePath { get; init; }
+		public static string MediaPath => Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+		public string SaveFolderName { get; init; }
+		public string SaveFolderPath => Path.Combine(MediaPath, SaveFolderName);
 	}
 }
