@@ -23,6 +23,17 @@ namespace Pictura.ClientAndroid.Services.Files
 			};
 		}
 
+		public async Task<IEnumerable<string>> GetAllFilePathAsync()
+		{
+			var files = new List<string>();
+			foreach (var mediaStoredPath in MediaDirectoriesStorage)
+			{
+				files.AddRange(await GetMediasFromDirectoryAsync(mediaStoredPath));
+			}
+
+			return files;
+		}
+
 		/**
 		 * <summary>Ajoute un dossier de sauvegarde pour les médias</summary>
 		 * <param name="mediaDirectoryStorage">Chemin du dossier à ajouter</param>
@@ -60,7 +71,7 @@ namespace Pictura.ClientAndroid.Services.Files
 		 * <param name="paths">Liste des chemins de fichier</param>
 		 * <returns>Retourne une liste des <see cref="FileStream"/> correspondant aux fichiers</returns>
 		 */
-		public async Task<IEnumerable<FileStream>> GetFileStreamsFromFilesAsync(IEnumerable<string> paths)
+		public async Task<IEnumerable<FileStream>> GetMultipleFileStreamsFromFilesAsync(IEnumerable<string> paths)
 		{
 			ICollection<FileStream> streams = new List<FileStream>();
 			

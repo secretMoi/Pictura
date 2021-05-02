@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Pictura.ClientAndroid.Services.Files;
 using Pictura.ClientAndroid.Services.ServerConnection.Networks;
 using Pictura.ClientAndroid.Views;
@@ -17,6 +18,7 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		public ObservableCollection<PictureModel> Monkeys { get; set; }
 		
 		public Command<string> PicturePicked { get; }
+		public Command<string> UploadMediasToServerCommand { get; }
 		
 		public GalleryViewModel(INavigation navigation, IFileService fileService, IPictureNetwork pictureNetwork)
 		{
@@ -26,28 +28,31 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 			Monkeys = new ObservableCollection<PictureModel>();
 
 			PicturePicked = new Command<string>(OnPicturePicked);
+			UploadMediasToServerCommand = new Command<string>(async _ => await UploadMediasToServerAsync());
 			
 			LoadMediasAsync();
+		}
+
+		private async Task UploadMediasToServerAsync()
+		{
+			var files = await _fileService.GetAllFilePathAsync();
+			var fileStreams = await _fileService.GetMultipleFileStreamsFromFilesAsync(files);
+				
+			await _pictureNetwork.PostStreamAsync(fileStreams);
 		}
 
 		private async void LoadMediasAsync()
 		{
 			try
 			{
-				var files = new List<string>();
-				foreach (var mediaStoredPath in _fileService.MediaDirectoriesStorage)
-				{
-					files.AddRange(await _fileService.GetMediasFromDirectoryAsync(mediaStoredPath));
-				}
+				var files = await _fileService.GetAllFilePathAsync();
 
 				foreach (var file in files)
 				{
 					Monkeys.Add(new PictureModel(file));
 				}
-				
-				// var fileStreams = await _fileService.GetFileStreamsFromFilesAsync(files);
-				//
-				// await _pictureNetwork.PostStreamAsync(fileStreams);
+
+				await UploadMediasToServerAsync();
 			}
 			catch (Exception e)
 			{

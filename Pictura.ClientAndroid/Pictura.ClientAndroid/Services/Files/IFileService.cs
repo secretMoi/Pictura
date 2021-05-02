@@ -36,6 +36,8 @@ namespace Pictura.ClientAndroid.Services.Files
 		 * <param name="paths">Liste des chemins de fichier</param>
 		 * <returns>Retourne une liste des <see cref="FileStream"/> correspondant aux fichiers</returns>
 		 */
-		Task<IEnumerable<FileStream>> GetFileStreamsFromFilesAsync(IEnumerable<string> paths);
+		Task<IEnumerable<FileStream>> GetMultipleFileStreamsFromFilesAsync(IEnumerable<string> paths);
+
+		Task<IEnumerable<string>> GetAllFilePathAsync();
 	}
 }

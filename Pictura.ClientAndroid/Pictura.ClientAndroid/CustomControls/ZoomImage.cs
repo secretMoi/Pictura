@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid.CustomControls
 {
 	public class ZoomImage : Image
 	{
-		private const double MIN_SCALE = 1;
-		private const double MAX_SCALE = 4;
-		private const double OVERSHOOT = 0.15;
-		private double StartScale;
-		private double LastX, LastY;
+		private const double MinScale = 1;
+		private const double MaxScale = 4;
+		private const double Overshoot = 0.15;
+		private double _startScale;
+		private double _lastX, _lastY;
 
 		public ZoomImage()
 		{
@@ -26,14 +25,14 @@ namespace Pictura.ClientAndroid.CustomControls
 			tap.Tapped += OnTapped;
 			GestureRecognizers.Add(tap);
 
-			Scale = MIN_SCALE;
+			Scale = MinScale;
 			TranslationX = TranslationY = 0;
 			AnchorX = AnchorY = 0;
 		}
 
 		protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
 		{
-			Scale = MIN_SCALE;
+			Scale = MinScale;
 			TranslationX = TranslationY = 0;
 			AnchorX = AnchorY = 0;
 			return base.OnMeasure(widthConstraint, heightConstraint);
@@ -41,15 +40,15 @@ namespace Pictura.ClientAndroid.CustomControls
 
 		private void OnTapped(object sender, EventArgs e)
 		{
-			if (Scale > MIN_SCALE)
+			if (Scale > MinScale)
 			{
-				this.ScaleTo(MIN_SCALE, 250, Easing.CubicInOut);
+				this.ScaleTo(MinScale, 250, Easing.CubicInOut);
 				this.TranslateTo(0, 0, 250, Easing.CubicInOut);
 			}
 			else
 			{
 				AnchorX = AnchorY = 0.5; //TODO tapped position
-				this.ScaleTo(MAX_SCALE, 250, Easing.CubicInOut);
+				this.ScaleTo(MaxScale, 250, Easing.CubicInOut);
 			}
 		}
 
@@ -58,12 +57,12 @@ namespace Pictura.ClientAndroid.CustomControls
 			switch (e.StatusType)
 			{
 				case GestureStatus.Started:
-					LastX = (1 - AnchorX) * Width;
-					LastY = (1 - AnchorY) * Height;
+					_lastX = (1 - AnchorX) * Width;
+					_lastY = (1 - AnchorY) * Height;
 					break;
 				case GestureStatus.Running:
-					AnchorX = Clamp(1 - (LastX + e.TotalX) / Width, 0, 1);
-					AnchorY = Clamp(1 - (LastY + e.TotalY) / Height, 0, 1);
+					AnchorX = Clamp(1 - (_lastX + e.TotalX) / Width, 0, 1);
+					AnchorY = Clamp(1 - (_lastY + e.TotalY) / Height, 0, 1);
 					break;
 			}
 		}
@@ -73,19 +72,19 @@ namespace Pictura.ClientAndroid.CustomControls
 			switch (e.Status)
 			{
 				case GestureStatus.Started:
-					StartScale = Scale;
+					_startScale = Scale;
 					AnchorX = e.ScaleOrigin.X;
 					AnchorY = e.ScaleOrigin.Y;
 					break;
 				case GestureStatus.Running:
-					double current = Scale + (e.Scale - 1) * StartScale;
-					Scale = Clamp(current, MIN_SCALE * (1 - OVERSHOOT), MAX_SCALE * (1 + OVERSHOOT));
+					double current = Scale + (e.Scale - 1) * _startScale;
+					Scale = Clamp(current, MinScale * (1 - Overshoot), MaxScale * (1 + Overshoot));
 					break;
 				case GestureStatus.Completed:
-					if (Scale > MAX_SCALE)
-						this.ScaleTo(MAX_SCALE, 250, Easing.SpringOut);
-					else if (Scale < MIN_SCALE)
-						this.ScaleTo(MIN_SCALE, 250, Easing.SpringOut);
+					if (Scale > MaxScale)
+						this.ScaleTo(MaxScale, 250, Easing.SpringOut);
+					else if (Scale < MinScale)
+						this.ScaleTo(MinScale, 250, Easing.SpringOut);
 					break;
 			}
 		}
