@@ -24,7 +24,7 @@ namespace Pictura.Server.Helpers.Pictures
 		 */
 		public async Task<string[]> GetAllFilesAsync()
 		{
-			return await GetFilesFromAsync(_pictureConfiguration.Path, PictureModel.SupportedFilesFormat, true);
+			return await GetFilesFromAsync(PictureOptions.MediaPath, PictureModel.SupportedFilesFormat, true);
 		}
 		
 		/**

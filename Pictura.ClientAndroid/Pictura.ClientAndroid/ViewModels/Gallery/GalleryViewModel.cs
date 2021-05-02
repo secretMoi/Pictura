@@ -45,9 +45,9 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 					Monkeys.Add(new PictureModel(file));
 				}
 				
-				//var fileStreams = await _fileService.GetFileStreamsFromFilesAsync(files);
-
-				//await _pictureNetwork.PostStreamAsync(fileStreams);
+				// var fileStreams = await _fileService.GetFileStreamsFromFilesAsync(files);
+				//
+				// await _pictureNetwork.PostStreamAsync(fileStreams);
 			}
 			catch (Exception e)
 			{

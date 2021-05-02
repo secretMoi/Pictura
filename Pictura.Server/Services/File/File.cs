@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -15,15 +16,15 @@ namespace Pictura.Server.Services.File
 		{
 			_pictureOptions = options.Value;
 			
-			if (!Directory.Exists(_pictureOptions.SavePath))
-				Directory.CreateDirectory(_pictureOptions.SavePath);
+			if (!Directory.Exists(_pictureOptions.SaveFolderPath))
+				Directory.CreateDirectory(_pictureOptions.SaveFolderPath);
 		}
 		
 		public async Task SaveFileAsync(IFormFile file)
 		{
 			if (file.Length > 0)
 			{
-				var fullSavePath = _pictureOptions.SavePath + file.FileName;
+				var fullSavePath = _pictureOptions.SaveFolderPath + file.FileName;
 
 				if(System.IO.File.Exists(fullSavePath))
 					System.IO.File.Delete(fullSavePath);

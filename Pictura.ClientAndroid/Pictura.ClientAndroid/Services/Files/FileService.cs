@@ -18,7 +18,8 @@ namespace Pictura.ClientAndroid.Services.Files
 		{
 			MediaDirectoriesStorage = new Collection<string>
 			{
-				"/storage/emulated/0/Download/"
+				"/storage/emulated/0/Download/",
+				"/storage/emulated/0/DCIM/"
 			};
 		}
 
