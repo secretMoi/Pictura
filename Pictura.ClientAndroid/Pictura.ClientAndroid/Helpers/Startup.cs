@@ -59,6 +59,7 @@ namespace Pictura.ClientAndroid.Helpers
 
 			services.AddSingleton<GalleryViewModel>();
 			services.AddSingleton<PictureFullScreenViewModel>();
+			services.AddSingleton<MetaDataInfoViewModel>();
 			services.AddSingleton<AppShell>();
 
 			//Another thing we can do is access variables from that json file

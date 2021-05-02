@@ -8,6 +8,10 @@
              x:DataType="gallery:PictureFullScreenViewModel"
              BackgroundColor="Black">
 	
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Info" Command="{Binding DisplayMetadataCommand}" Priority="1" />
+	</ContentPage.ToolbarItems>
+	
 	<Grid BackgroundColor="Black">
 		<!-- <Image Source="{Binding ImagePath}" > -->
 		<!-- 	<Image.GestureRecognizers> -->
