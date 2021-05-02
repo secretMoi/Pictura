@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:gallery="clr-namespace:Pictura.ClientAndroid.ViewModels.Gallery;assembly=Pictura.ClientAndroid"
+             x:Class="Pictura.ClientAndroid.Views.MetaDataInfoPage"
+             x:DataType="gallery:MetaDataInfoViewModel">
+	
+	<!-- <ListView ItemsSource="{Binding MetaDataItems}"> -->
+	<!-- 	<ListView.ItemTemplate> -->
+	<!-- 		<DataTemplate> -->
+	<!-- 			<StackLayout Orientation="Horizontal" Height="100"> -->
+	<!-- 				<Label FontAttributes="Bold" Text="{Binding Name}" /> -->
+	<!-- 				<Label  -->
+	<!-- 					Margin="50" -->
+	<!-- 					Text="{Binding Description}" /> -->
+	<!-- 			</StackLayout> -->
+	<!-- 		</DataTemplate> -->
+	<!-- 	</ListView.ItemTemplate> -->
+	<!-- </ListView> -->
+</ContentPage>

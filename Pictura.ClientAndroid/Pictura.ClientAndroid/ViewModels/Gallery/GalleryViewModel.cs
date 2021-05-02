@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Pictura.ClientAndroid.Services.Files;
@@ -51,8 +50,6 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 				{
 					Monkeys.Add(new PictureModel(file));
 				}
-
-				await UploadMediasToServerAsync();
 			}
 			catch (Exception e)
 			{
