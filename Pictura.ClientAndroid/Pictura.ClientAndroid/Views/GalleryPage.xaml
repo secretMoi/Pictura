@@ -6,6 +6,10 @@
              x:Class="Pictura.ClientAndroid.Views.GalleryPage"
              x:DataType="gallery:GalleryViewModel">
 	
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Upload" Command="{Binding UploadMediasToServerCommand}" />
+	</ContentPage.ToolbarItems>
+	
 	<ContentPage.Content>
 		
 		<CollectionView ItemsSource="{Binding Monkeys}" Margin="10">

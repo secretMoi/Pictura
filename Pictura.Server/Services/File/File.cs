@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +23,7 @@ namespace Pictura.Server.Services.File
 		{
 			if (file.Length > 0)
 			{
-				var fullSavePath = _pictureOptions.SaveFolderPath + file.FileName;
+				var fullSavePath = Path.Combine(_pictureOptions.SaveFolderPath, file.FileName);
 
 				if(System.IO.File.Exists(fullSavePath))
 					System.IO.File.Delete(fullSavePath);
