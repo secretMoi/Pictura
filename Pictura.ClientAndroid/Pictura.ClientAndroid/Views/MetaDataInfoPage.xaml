@@ -6,16 +6,26 @@
              x:Class="Pictura.ClientAndroid.Views.MetaDataInfoPage"
              x:DataType="gallery:MetaDataInfoViewModel">
 	
-	<!-- <ListView ItemsSource="{Binding MetaDataItems}"> -->
-	<!-- 	<ListView.ItemTemplate> -->
-	<!-- 		<DataTemplate> -->
-	<!-- 			<StackLayout Orientation="Horizontal" Height="100"> -->
-	<!-- 				<Label FontAttributes="Bold" Text="{Binding Name}" /> -->
-	<!-- 				<Label  -->
-	<!-- 					Margin="50" -->
-	<!-- 					Text="{Binding Description}" /> -->
-	<!-- 			</StackLayout> -->
-	<!-- 		</DataTemplate> -->
-	<!-- 	</ListView.ItemTemplate> -->
-	<!-- </ListView> -->
+	<ContentPage.Content>
+		<ListView ItemsSource="{Binding MetaDataItems}"
+		          HasUnevenRows="True">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+						<Grid Margin="20" VerticalOptions="Center">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+							
+							<Label FontAttributes="Bold" Text="{Binding Name}"
+							       x:DataType="gallery:MetaDataItem" TextColor="Black" FontSize="18" />
+							<Label Grid.Column="1" HorizontalOptions="End" x:DataType="gallery:MetaDataItem"  TextColor="Gray" FontSize="16"
+							       Text="{Binding Description}" />
+						</Grid>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+	</ContentPage.Content>
 </ContentPage>

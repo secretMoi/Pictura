@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using ExifLib;
+using System.Linq;
+using MetadataExtractor;
 using Pictura.ClientAndroid.Services.Files;
 using Xamarin.Forms;
 
@@ -28,24 +27,29 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 			set
 			{
 				SetProperty(ref _imagePath, value);
-				GetDate();
+				ExtractMetaData();
 			}
 		}
 
-		public async void GetDate()
+		private void ExtractMetaData()
 		{
-			await using var fileStream = await _fileService.GetFileStreamFromFileAsync(ImagePath);
-			var picInfo = ExifReader.ReadJpeg(fileStream);
-			var name = picInfo.FileName;
-			var lat = picInfo.GpsLatitude;
-			var longi = picInfo.GpsLongitude;
-			var comment = picInfo.UserComment;
+			var directories = ImageMetadataReader.ReadMetadata(ImagePath);
+			var directory = directories.FirstOrDefault(item => item.Name.Equals("Exif SubIFD"));
+			if (directory != null)
+				foreach (var tag in directory.Tags)
+					MetaDataItems.Add(new MetaDataItem(tag.Name, tag.Description));
 		}
-		
-		public class MetaDataItem
+	}
+	
+	public class MetaDataItem
+	{
+		public MetaDataItem(string name, string description)
 		{
-			public string Name { get; set; }
-			public string Description { get; set; }
+			Name = name;
+			Description = description;
 		}
+
+		public string Name { get; set; }
+		public string Description { get; set; }
 	}
 }

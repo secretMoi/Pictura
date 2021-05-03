@@ -7,7 +7,8 @@
              x:DataType="gallery:GalleryViewModel">
 	
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Upload" Command="{Binding UploadMediasToServerCommand}" Priority="1" />
+		<ToolbarItem Text="Upload" Priority="1"
+		             Command="{Binding UploadMediasToServerCommand}" />
 	</ContentPage.ToolbarItems>
 		
 	<CollectionView ItemsSource="{Binding Monkeys}" Margin="10">
