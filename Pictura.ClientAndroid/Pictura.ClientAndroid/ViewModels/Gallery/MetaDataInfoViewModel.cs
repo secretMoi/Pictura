@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using MetadataExtractor;
-using Pictura.ClientAndroid.Services.Files;
 using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid.ViewModels.Gallery
@@ -10,12 +9,10 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 	[QueryProperty(nameof(ImagePath), nameof(ImagePath))]
 	public class MetaDataInfoViewModel : BaseViewModel
 	{
-		private readonly IFileService _fileService;
-
-		public MetaDataInfoViewModel(IFileService fileService)
+		public MetaDataInfoViewModel()
 		{
-			_fileService = fileService;
 			MetaDataItems = new Collection<MetaDataItem>();
+			Title = "Métadonnées";
 		}
 
 		public ICollection<MetaDataItem> MetaDataItems { get; set; }

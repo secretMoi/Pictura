@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Kaliko.ImageLibrary;
+using Kaliko.ImageLibrary.Scaling;
 using Pictura.ClientAndroid.Services.Files;
 using Pictura.ClientAndroid.Services.ServerConnection.Networks;
 using Pictura.ClientAndroid.Views;
@@ -9,7 +11,7 @@ using INavigation = Pictura.ClientAndroid.Helpers.Navigation.INavigation;
 
 namespace Pictura.ClientAndroid.ViewModels.Gallery
 {
-	public class GalleryViewModel
+	public class GalleryViewModel : BaseViewModel
 	{
 		private readonly INavigation _navigation;
 		private readonly IFileService _fileService;
@@ -21,6 +23,8 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		
 		public GalleryViewModel(INavigation navigation, IFileService fileService, IPictureNetwork pictureNetwork)
 		{
+			Title = "Gallerie";
+			
 			_navigation = navigation;
 			_fileService = fileService;
 			_pictureNetwork = pictureNetwork;
@@ -48,13 +52,26 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 
 				foreach (var file in files)
 				{
-					Monkeys.Add(new PictureModel(file));
+					var thumbNailPath = await GenerateThumbnailAsync();
+					Monkeys.Add(new PictureModel(thumbNailPath));
+					//Monkeys.Add(new PictureModel(file));
 				}
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
 			}
+		}
+
+		private async Task<string> GenerateThumbnailAsync(string filePath)
+		{
+			await Task.Run(() =>
+			{
+				var image = new KalikoImage(filePath);
+
+				var thumb = image.Scale(new CropScaling(128, 128));
+				thumb.SaveJpg("thumbnail-" + filePath, 20);
+			});
 		}
 
 		private async void OnPicturePicked(string imagePath)
