@@ -10,12 +10,12 @@ namespace Pictura.ClientAndroid
 	{
 		public static IServiceProvider DiServices => Startup.ServiceProvider;
 		
-		public App()
+		public App(Action<IServiceCollection> addPlatformServices = null)
 		{
 			InitializeComponent();
 
 			DependencyService.Register<MockDataStore>();
-			Startup.Init();
+			Startup.Init(addPlatformServices);
 			
 			MainPage = Startup.ServiceProvider.GetService<AppShell>();
 		}
