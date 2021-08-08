@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows.Input;
 using Pictura.ClientAndroid.PlatformInterfaces;
 using Pictura.ClientAndroid.Services.Files;
@@ -33,7 +32,7 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 			_thumbnailService = thumbnailService;
 			Monkeys = new ObservableCollection<PictureModel>();
 
-			PicturePicked = new Command<string>(OnPicturePicked);
+			PicturePicked = new Command<PictureModel>(OnPicturePicked);
 			UploadMediasToServerCommand = new Command(UploadMediasToServerAsync);
 			
 			LoadMediasAsync();
@@ -51,12 +50,13 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		{
 			try
 			{
-				var fileNames = await _fileService.GetAllFilePathAsync();
+				var filePaths = await _fileService.GetAllFilePathAsync();
 
-				foreach (var fileName in fileNames)
+				foreach (var filePath in filePaths)
 				{
-					var thumbNailPath = await _thumbnailService.GenerateThumbnailAsync("/storage/emulated/0/thumbs/", fileName);
-					Monkeys.Add(new PictureModel(thumbNailPath));
+					var thumbNailPath = 
+						await _thumbnailService.GenerateThumbnailAsync("/storage/emulated/0/thumbs/", filePath);
+					Monkeys.Add(new PictureModel(filePath, thumbNailPath));
 				}
 			}
 			catch (Exception e)
@@ -65,21 +65,23 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 			}
 		}
 
-		private async void OnPicturePicked(string imagePath)
+		private async void OnPicturePicked(PictureModel picture)
 		{
-			if (string.IsNullOrWhiteSpace(imagePath)) return;
+			if (string.IsNullOrWhiteSpace(picture.Path)) return;
 
-			await _navigation.PushAsync<PictureFullScreenPage>(nameof(PictureFullScreenViewModel.ImagePath), imagePath);
+			await _navigation.PushAsync<PictureFullScreenPage>(nameof(PictureFullScreenViewModel.ImagePath), picture.Path);
 		}
 	}
 
 	public class PictureModel
 	{
 		public string Path { get; set; }
+		public string ThumbnailPath { get; set; }
 
-		public PictureModel(string path)
+		public PictureModel(string path, string thumbnailPath)
 		{
 			Path = path;
+			ThumbnailPath = thumbnailPath;
 		}
 	}
 }

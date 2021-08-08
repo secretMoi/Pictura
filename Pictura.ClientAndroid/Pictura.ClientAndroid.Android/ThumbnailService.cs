@@ -12,6 +12,7 @@ namespace Pictura.ClientAndroid.Droid
 		public async Task<string> GenerateThumbnailAsync(string thumbnailsFolderPath, string filePath)
 		{
 			var thumbnailPath = Path.Combine(thumbnailsFolderPath, "thumbnail-" + Path.GetFileName(filePath));
+			if (File.Exists(thumbnailPath)) return thumbnailPath;
 			
 			try
 			{
@@ -29,14 +30,12 @@ namespace Pictura.ClientAndroid.Droid
 				// 	var bitmapData = memoryStream.ToArray();
 				
 				var imageAsByteArray = await ResizeImage(filePath, 500, 500);
-				// if (!File.Exists(thumbnailPath))
-				// {
-					if (!Directory.Exists(Path.GetDirectoryName(thumbnailPath)))
-						Directory.CreateDirectory(Path.GetDirectoryName(thumbnailPath) ?? string.Empty);
-					
-					await File.WriteAllBytesAsync(thumbnailPath, imageAsByteArray);
-				// }
 				
+				if (!Directory.Exists(Path.GetDirectoryName(thumbnailPath)))
+					Directory.CreateDirectory(Path.GetDirectoryName(thumbnailPath) ?? string.Empty);
+					
+				await File.WriteAllBytesAsync(thumbnailPath, imageAsByteArray);
+
 				return thumbnailPath;
 			}
 			catch (Exception e)

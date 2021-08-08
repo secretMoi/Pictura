@@ -20,7 +20,7 @@ namespace Pictura.ClientAndroid.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(AddServices));
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDM5NjA4QDMxMzkyZTMxMmUzMFRDSDJxeVVEZS9rc2E4K3J0WVZJcnFqaXlQbjFvZzVNWnJWVDVOa291K0E9");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDg1NTA2QDMxMzkyZTMyMmUzMGsxWU9NN2VDZnFWTzlaK3U0aEpPdkxGK3hUT29NR3JFYkJYREg2OU1ycnc9");
         }
         
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
