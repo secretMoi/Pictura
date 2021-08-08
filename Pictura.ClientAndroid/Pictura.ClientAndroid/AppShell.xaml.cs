@@ -1,7 +1,6 @@
 ﻿using Pictura.ClientAndroid.Views;
 using System;
 using Pictura.ClientAndroid.Helpers.Routes;
-using Pictura.ClientAndroid.ViewModels.Gallery;
 using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid
