@@ -3,7 +3,7 @@ using Pictura.ClientAndroid.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid.ViewModels
@@ -13,22 +13,22 @@ namespace Pictura.ClientAndroid.ViewModels
 		private Item _selectedItem;
 
 		public ObservableCollection<Item> Items { get; }
-		public Command LoadItemsCommand { get; }
-		public Command AddItemCommand { get; }
-		public Command<Item> ItemTapped { get; }
+		public ICommand LoadItemsCommand { get; }
+		public ICommand AddItemCommand { get; }
+		public ICommand ItemTapped { get; }
 
 		public ItemsViewModel()
 		{
 			Title = "Browse";
 			Items = new ObservableCollection<Item>();
-			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+			LoadItemsCommand = new Command(ExecuteLoadItemsCommand);
 
 			ItemTapped = new Command<Item>(OnItemSelected);
 
 			AddItemCommand = new Command(OnAddItem);
 		}
 
-		async Task ExecuteLoadItemsCommand()
+		private async void ExecuteLoadItemsCommand()
 		{
 			IsBusy = true;
 

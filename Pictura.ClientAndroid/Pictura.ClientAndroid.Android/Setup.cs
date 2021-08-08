@@ -7,7 +7,7 @@ namespace Pictura.ClientAndroid.Droid
 {
 	public class Setup
 	{
-		public static Action<IConfigurationBuilder> Configuration => (builder) =>
+		public static Action<IConfigurationBuilder> Configuration => builder =>
 		{
 			builder.AddJsonFile(new EmbeddedFileProvider(typeof(Setup).Assembly, typeof(Setup).Namespace),
 				"appsettings.json", false, false);
@@ -16,7 +16,7 @@ namespace Pictura.ClientAndroid.Droid
 		public static Action<IServiceCollection, IConfigurationRoot> DependencyInjection =>
 			(serviceCollection, configurationRoot) =>
 			{
-				// Add your platform services
+				serviceCollection.AddSingleton<IThumbnailService, ThumbnailService>();
 			};
 	}
 }

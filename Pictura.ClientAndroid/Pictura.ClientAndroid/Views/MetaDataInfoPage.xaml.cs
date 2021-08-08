@@ -8,7 +8,7 @@ namespace Pictura.ClientAndroid.Views
 	{
 		public MetaDataInfoPage()
 		{
-			BindingContext = App.DiServices.GetService<MetaDataInfoViewModel>();;
+			BindingContext = App.DiServices.GetService<MetaDataInfoViewModel>();
 			InitializeComponent();
 		}
 	}

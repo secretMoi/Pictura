@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Kaliko.ImageLibrary;
 using Kaliko.ImageLibrary.Scaling;
 using Pictura.ClientAndroid.Services.Files;
@@ -18,8 +20,8 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		private readonly IPictureNetwork _pictureNetwork;
 		public ObservableCollection<PictureModel> Monkeys { get; set; }
 		
-		public Command<string> PicturePicked { get; }
-		public Command<string> UploadMediasToServerCommand { get; }
+		public ICommand PicturePicked { get; }
+		public ICommand UploadMediasToServerCommand { get; }
 		
 		public GalleryViewModel(INavigation navigation, IFileService fileService, IPictureNetwork pictureNetwork)
 		{
@@ -31,12 +33,12 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 			Monkeys = new ObservableCollection<PictureModel>();
 
 			PicturePicked = new Command<string>(OnPicturePicked);
-			UploadMediasToServerCommand = new Command<string>(async _ => await UploadMediasToServerAsync());
+			UploadMediasToServerCommand = new Command(UploadMediasToServerAsync);
 			
 			LoadMediasAsync();
 		}
 
-		private async Task UploadMediasToServerAsync()
+		private async void UploadMediasToServerAsync()
 		{
 			var files = await _fileService.GetAllFilePathAsync();
 			var fileStreams = await _fileService.GetMultipleFileStreamsFromFilesAsync(files);
@@ -48,11 +50,11 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		{
 			try
 			{
-				var files = await _fileService.GetAllFilePathAsync();
+				var fileNames = await _fileService.GetAllFilePathAsync();
 
-				foreach (var file in files)
+				foreach (var fileName in fileNames)
 				{
-					var thumbNailPath = await GenerateThumbnailAsync();
+					var thumbNailPath = await GenerateThumbnailAsync(string.Empty, fileName);
 					Monkeys.Add(new PictureModel(thumbNailPath));
 					//Monkeys.Add(new PictureModel(file));
 				}
@@ -63,14 +65,17 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 			}
 		}
 
-		private async Task<string> GenerateThumbnailAsync(string filePath)
+		private async Task<string> GenerateThumbnailAsync(string rootPath, string filePath)
 		{
-			await Task.Run(() =>
+			return await Task.Run(() =>
 			{
 				var image = new KalikoImage(filePath);
 
 				var thumb = image.Scale(new CropScaling(128, 128));
-				thumb.SaveJpg("thumbnail-" + filePath, 20);
+				var thumbnailPath = Path.Combine(rootPath, "thumbnail-" + filePath);
+				thumb.SaveJpg(thumbnailPath, 20);
+				
+				return thumbnailPath;
 			});
 		}
 

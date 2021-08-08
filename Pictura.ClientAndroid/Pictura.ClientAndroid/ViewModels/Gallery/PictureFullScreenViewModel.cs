@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Pictura.ClientAndroid.Views;
 using Xamarin.Forms;
 using INavigation = Pictura.ClientAndroid.Helpers.Navigation.INavigation;
@@ -14,16 +13,16 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		public PictureFullScreenViewModel(INavigation navigation)
 		{
 			_navigation = navigation;
-			SwipedDownCommand = new Command(async () => await OnPictureSwipedDownAsync());
-			DisplayMetadataCommand = new Command(async () => await NavigateToDisplayMetadataAsync());
+			SwipedDownCommand = new Command(OnPictureSwipedDownAsync);
+			DisplayMetadataCommand = new Command(NavigateToDisplayMetadataAsync);
 		}
 
-		private async Task NavigateToDisplayMetadataAsync()
+		private async void NavigateToDisplayMetadataAsync()
 		{
 			await _navigation.PushAsync<MetaDataInfoPage>(nameof(MetaDataInfoViewModel.ImagePath), ImagePath);
 		}
 
-		private async Task OnPictureSwipedDownAsync()
+		private async void OnPictureSwipedDownAsync()
 		{
 			await _navigation.GoBackAsync();
 		}
