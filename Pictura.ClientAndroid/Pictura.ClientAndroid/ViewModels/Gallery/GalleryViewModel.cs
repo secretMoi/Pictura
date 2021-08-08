@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Kaliko.ImageLibrary;
-using Kaliko.ImageLibrary.Scaling;
+using Pictura.ClientAndroid.PlatformInterfaces;
 using Pictura.ClientAndroid.Services.Files;
 using Pictura.ClientAndroid.Services.ServerConnection.Networks;
 using Pictura.ClientAndroid.Views;
@@ -18,18 +16,21 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		private readonly INavigation _navigation;
 		private readonly IFileService _fileService;
 		private readonly IPictureNetwork _pictureNetwork;
+		private readonly IThumbnailService _thumbnailService;
 		public ObservableCollection<PictureModel> Monkeys { get; set; }
 		
 		public ICommand PicturePicked { get; }
 		public ICommand UploadMediasToServerCommand { get; }
 		
-		public GalleryViewModel(INavigation navigation, IFileService fileService, IPictureNetwork pictureNetwork)
+		public GalleryViewModel(INavigation navigation, IFileService fileService, IPictureNetwork pictureNetwork,
+			IThumbnailService thumbnailService)
 		{
 			Title = "Gallerie";
 			
 			_navigation = navigation;
 			_fileService = fileService;
 			_pictureNetwork = pictureNetwork;
+			_thumbnailService = thumbnailService;
 			Monkeys = new ObservableCollection<PictureModel>();
 
 			PicturePicked = new Command<string>(OnPicturePicked);
@@ -54,29 +55,14 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 
 				foreach (var fileName in fileNames)
 				{
-					var thumbNailPath = await GenerateThumbnailAsync(string.Empty, fileName);
+					var thumbNailPath = await _thumbnailService.GenerateThumbnailAsync("/storage/emulated/0/thumbs/", fileName);
 					Monkeys.Add(new PictureModel(thumbNailPath));
-					//Monkeys.Add(new PictureModel(file));
 				}
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
 			}
-		}
-
-		private async Task<string> GenerateThumbnailAsync(string rootPath, string filePath)
-		{
-			return await Task.Run(() =>
-			{
-				var image = new KalikoImage(filePath);
-
-				var thumb = image.Scale(new CropScaling(128, 128));
-				var thumbnailPath = Path.Combine(rootPath, "thumbnail-" + filePath);
-				thumb.SaveJpg(thumbnailPath, 20);
-				
-				return thumbnailPath;
-			});
 		}
 
 		private async void OnPicturePicked(string imagePath)

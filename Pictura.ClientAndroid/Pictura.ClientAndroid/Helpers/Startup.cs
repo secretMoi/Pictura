@@ -15,10 +15,13 @@ namespace Pictura.ClientAndroid.Helpers
 {
 	public static class Startup
 	{
-		public static IServiceProvider ServiceProvider { get; private set; }
+		private static Action<IServiceCollection> _addPlatformServices;
 		
-		public static void Init()
+		public static IServiceProvider ServiceProvider { get; private set; }
+
+		public static void Init(Action<IServiceCollection> addPlatformServices = null)
 		{
+			_addPlatformServices = addPlatformServices;
 			var assembly = Assembly.GetExecutingAssembly();
 			using var stream = assembly.GetManifestResourceStream("Pictura.ClientAndroid.appsettings.json");
 
@@ -51,13 +54,16 @@ namespace Pictura.ClientAndroid.Helpers
 			{
 				services.AddSingleton<INavigation, ShellNavigation>();
 			}
+			
+			// Add platform specific services
+			_addPlatformServices?.Invoke(services);
 
 			services.AddSingleton<IRoute>(new Route("Pictura.ClientAndroid.Views"));
 			services.AddSingleton<IServerConnection, ServerConnection>();
 			services.AddSingleton<IFileService, FileService>();
 			services.AddSingleton<IPictureNetwork, PictureNetwork>();
 
-			services.AddSingleton<GalleryViewModel>();
+			services.AddScoped<GalleryViewModel>();
 			services.AddSingleton<PictureFullScreenViewModel>();
 			services.AddSingleton<MetaDataInfoViewModel>();
 			services.AddSingleton<AppShell>();
