@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using Pictura.ClientAndroid.Views;
 using Xamarin.Forms;
-using INavigation = Pictura.ClientAndroid.Helpers.Navigation.INavigation;
+using INavigation = Pictura.ClientAndroid.Services.Navigation.INavigation;
 
 namespace Pictura.ClientAndroid.ViewModels.Gallery
 {

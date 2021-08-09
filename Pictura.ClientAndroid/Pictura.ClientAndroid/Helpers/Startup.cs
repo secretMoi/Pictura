@@ -3,13 +3,15 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Pictura.ClientAndroid.Helpers.Navigation;
-using Pictura.ClientAndroid.Helpers.Routes;
+using Pictura.ClientAndroid.Models;
 using Pictura.ClientAndroid.Services.Files;
+using Pictura.ClientAndroid.Services.Navigation;
+using Pictura.ClientAndroid.Services.Routes;
 using Pictura.ClientAndroid.Services.ServerConnection;
 using Pictura.ClientAndroid.Services.ServerConnection.Networks;
 using Pictura.ClientAndroid.ViewModels.Gallery;
 using Xamarin.Essentials;
+using INavigation = Pictura.ClientAndroid.Services.Navigation.INavigation;
 
 namespace Pictura.ClientAndroid.Helpers
 {
@@ -23,15 +25,15 @@ namespace Pictura.ClientAndroid.Helpers
 		{
 			_addPlatformServices = addPlatformServices;
 			var assembly = Assembly.GetExecutingAssembly();
-			using var stream = assembly.GetManifestResourceStream("Pictura.ClientAndroid.appsettings.json");
-
 			var host = new HostBuilder()
-				.ConfigureHostConfiguration(c =>
+				.ConfigureHostConfiguration(c => 
 				{
+					var stream = assembly.GetManifestResourceStream("Pictura.ClientAndroid.appsettings.json");
+					
 					// Tell the host configuration where to find the file (this is required for Xamarin apps)
 					c.AddCommandLine(new [] { $"ContentRoot={FileSystem.AppDataDirectory}" });
-					
 					c.AddJsonStream(stream);
+					
 				})
 				.ConfigureServices(ConfigureServices)
 				.Build();
@@ -42,6 +44,8 @@ namespace Pictura.ClientAndroid.Helpers
 			ServiceProvider.GetService<IServerConnection>()?.InitializeClient();
 			ServiceProvider.GetService<IPictureNetwork>()?.GetFilesFromDiskAsync();
 		}
+		
+		
 
 		static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
 		{
@@ -55,6 +59,9 @@ namespace Pictura.ClientAndroid.Helpers
 				services.AddSingleton<INavigation, ShellNavigation>();
 			}
 			
+			services.Configure<PathOptions>(context.Configuration.GetSection("Path"));
+			services.Configure<ServerConfiguration>(context.Configuration.GetSection("Server"));
+			
 			// Add platform specific services
 			_addPlatformServices?.Invoke(services);
 
@@ -63,13 +70,13 @@ namespace Pictura.ClientAndroid.Helpers
 			services.AddSingleton<IFileService, FileService>();
 			services.AddSingleton<IPictureNetwork, PictureNetwork>();
 
-			services.AddScoped<GalleryViewModel>();
-			services.AddSingleton<PictureFullScreenViewModel>();
-			services.AddSingleton<MetaDataInfoViewModel>();
+			services.AddTransient<GalleryViewModel>();
+			services.AddTransient<PictureFullScreenViewModel>();
+			services.AddTransient<MetaDataInfoViewModel>();
 			services.AddSingleton<AppShell>();
 
 			//Another thing we can do is access variables from that json file
-			var world = context.Configuration["Hello"];
+			//var world = context.Configuration["Hello"];
 		}
 	}
 }
