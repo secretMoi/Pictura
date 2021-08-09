@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Pictura.ClientAndroid.Models;
 using Pictura.Shared.Extensions;
 
@@ -12,9 +13,9 @@ namespace Pictura.ClientAndroid.Services.ServerConnection
 	{
 		private readonly ServerConfiguration _serverConfiguration;
 
-		public ServerConnection(IConfiguration configuration)
+		public ServerConnection(IOptions<ServerConfiguration> serverConfiguration)
 		{
-			_serverConfiguration = configuration.GetModelFromSection<ServerConfiguration>("Server");
+			_serverConfiguration = serverConfiguration.Value;
 		}
 
 		private static HttpClient _apiClient;

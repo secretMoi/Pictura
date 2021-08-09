@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Pictura.ClientAndroid.Helpers.Navigation
+namespace Pictura.ClientAndroid.Services.Navigation
 {
 	public interface INavigation
 	{

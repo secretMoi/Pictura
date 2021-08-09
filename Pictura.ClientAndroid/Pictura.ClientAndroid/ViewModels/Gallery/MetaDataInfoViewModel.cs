@@ -31,10 +31,18 @@ namespace Pictura.ClientAndroid.ViewModels.Gallery
 		private void ExtractMetaData()
 		{
 			var directories = ImageMetadataReader.ReadMetadata(ImagePath);
-			var directory = directories.FirstOrDefault(item => item.Name.Equals("Exif SubIFD"));
-			if (directory != null)
-				foreach (var tag in directory.Tags)
-					MetaDataItems.Add(new MetaDataItem(tag.Name, tag.Description));
+			
+			ReadDirectory(directories, "Exif SubIFD");
+			ReadDirectory(directories, "File");
+			ReadDirectory(directories, "File Type");
+		}
+
+		private void ReadDirectory(IReadOnlyCollection<Directory> directories, string directoryName)
+		{
+			var directory = directories.FirstOrDefault(item => item.Name.Equals(directoryName));
+			if (directory == null) return;
+			foreach (var tag in directory.Tags)
+				MetaDataItems.Add(new MetaDataItem(tag.Name, tag.Description));
 		}
 	}
 	

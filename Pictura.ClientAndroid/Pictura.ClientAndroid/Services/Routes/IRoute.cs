@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace Pictura.ClientAndroid.Helpers.Routes
+namespace Pictura.ClientAndroid.Services.Routes
 {
 	public interface IRoute
 	{

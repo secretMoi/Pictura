@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Pictura.ClientAndroid.Helpers.Routes;
+using Pictura.ClientAndroid.Services.Routes;
 using Xamarin.Forms;
 
-namespace Pictura.ClientAndroid.Helpers.Navigation
+namespace Pictura.ClientAndroid.Services.Navigation
 {
 	public class ShellNavigation : INavigation
 	{

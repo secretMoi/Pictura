@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:gallery="clr-namespace:Pictura.ClientAndroid.ViewModels.Gallery;assembly=Pictura.ClientAndroid"
              x:Class="Pictura.ClientAndroid.Views.MetaDataInfoPage"
+             Shell.PresentationMode="Modal"
              x:DataType="gallery:MetaDataInfoViewModel">
 	
 	<ContentPage.Content>

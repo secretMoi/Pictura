@@ -1,6 +1,6 @@
 ﻿using Pictura.ClientAndroid.Views;
 using System;
-using Pictura.ClientAndroid.Helpers.Routes;
+using Pictura.ClientAndroid.Services.Routes;
 using Xamarin.Forms;
 
 namespace Pictura.ClientAndroid
