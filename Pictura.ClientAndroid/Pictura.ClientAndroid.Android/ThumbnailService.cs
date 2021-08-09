@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using Android.Graphics;
-using Android.OS;
 using Pictura.ClientAndroid.PlatformInterfaces;
 using Path = System.IO.Path;
 
