@@ -2,10 +2,8 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Pictura.ClientAndroid.Models;
-using Pictura.Shared.Extensions;
 
 namespace Pictura.ClientAndroid.Services.ServerConnection
 {

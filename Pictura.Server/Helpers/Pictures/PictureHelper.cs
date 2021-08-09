@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Pictura.Server.Models;
 using Pictura.Shared.Models;
 
@@ -9,15 +8,6 @@ namespace Pictura.Server.Helpers.Pictures
 {
 	public class PictureHelper : IPictureHelper
 	{
-		private readonly PictureOptions _pictureConfiguration;
-
-		public PictureHelper(IConfiguration configuration)
-		{
-			_pictureConfiguration = configuration
-				.GetSection("Picture")
-				.Get<PictureOptions>();
-		}
-
 		/**
 		 * <summary>Récupère tous les médias du répertoire de sauvegarde par défaut</summary>
 		 * <returns>Renvoie le chemin de tous les fichiers trouvés</returns>
